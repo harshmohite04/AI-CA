@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2025-06-01",
+    "description": "Starbucks",
+    "amount": 250,
+    "type": "debit",
+    "category": "Food"
+  },
+  {
+    "date": "2025-06-05",
+    "description": "Salary",
+    "amount": 60000,
+    "type": "credit",
+    "category": "Income"
+  },
+  {
+    "date": "2025-06-10",
+    "description": "Zomato",
+    "amount": 500,
+    "type": "debit",
+    "category": "Food"
+  }
+]
