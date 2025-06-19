@@ -135,6 +135,81 @@ Respond in plain English.
   }
 });
 
+// ✅ Calculate P&L
+app.get("/api/pl/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const user = await User.findOne({ userId });
+    if (!user || !user.transactions || user.transactions.length === 0) {
+      return res.status(404).json({ error: "No transactions found for this user." });
+    }
+
+    // Calculate total income and expenses
+    const totals = user.transactions.reduce((acc, transaction) => {
+      const amount = transaction.amount;
+      if (transaction.type === 'income') {
+        acc.income += amount;
+      } else if (transaction.type === 'expense') {
+        acc.expenses += amount;
+      }
+      return acc;
+    }, { income: 0, expenses: 0 });
+
+    // Calculate net profit/loss
+    const netPL = totals.income - totals.expenses;
+
+    // Calculate P&L by category
+    const categoryPL = user.transactions.reduce((acc, transaction) => {
+      const category = transaction.category || 'uncategorized';
+      if (!acc[category]) {
+        acc[category] = { income: 0, expenses: 0 };
+      }
+      
+      if (transaction.type === 'income') {
+        acc[category].income += transaction.amount;
+      } else if (transaction.type === 'expense') {
+        acc[category].expenses += transaction.amount;
+      }
+      return acc;
+    }, {});
+
+    // Calculate P&L by month
+    const monthlyPL = user.transactions.reduce((acc, transaction) => {
+      const date = new Date(transaction.date);
+      const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      
+      if (!acc[monthYear]) {
+        acc[monthYear] = { income: 0, expenses: 0 };
+      }
+      
+      if (transaction.type === 'income') {
+        acc[monthYear].income += transaction.amount;
+      } else if (transaction.type === 'expense') {
+        acc[monthYear].expenses += transaction.amount;
+      }
+      return acc;
+    }, {});
+
+    res.json({
+      summary: {
+        totalIncome: totals.income,
+        totalExpenses: totals.expenses,
+        netProfitLoss: netPL,
+        profitLossPercentage: totals.income > 0 ? (netPL / totals.income) * 100 : 0
+      },
+      byCategory: categoryPL,
+      byMonth: monthlyPL
+    });
+  } catch (err) {
+    console.error("Error calculating P&L:", err);
+    res.status(500).json({ 
+      error: "Failed to calculate P&L",
+      details: err.message 
+    });
+  }
+});
+
 // ✅ Health check
 app.get("/", (req, res) => {
   res.send("✅ MCP AI CA Server (MongoDB + Groq) is running.");
