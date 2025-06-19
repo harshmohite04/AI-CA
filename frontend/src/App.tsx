@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import PersonalDetails from './Pages/PersonalDetails';
+import BankDetails from './Pages/BankDetails';
+import Home from './Pages/Home';
+import ITRFilling from './Pages/ITRfilling';
+import GSTfiling from './Pages/GSTfiling';
+import TDSfiling from './Pages/TDSfiling';
+import PayrollProcessing from './Pages/PayrollProcessing';
+import BusinessDetails from './Pages/BusinessDetails';
+import DocumentUploads from './Pages/DocumentUploads';
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes >
+        <Route path="/form/PersonalDetails" element={<PersonalDetails />} />
+        <Route path="/form/BankDetails" element={<BankDetails />} />
+        <Route path="/form/ITRFilling" element={<ITRFilling />} />
+        <Route path="/form/GSTfiling" element={<GSTfiling />} />
+        <Route path="/form/TDSfiling" element={<TDSfiling />} />
+        <Route path="/form/PayrollProcessing" element={<PayrollProcessing />} />
+        <Route path="/form/BusinessDetails" element={<BusinessDetails />} />
+        <Route path="/form/DocumentUploads" element={<DocumentUploads />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="*" element={
+          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <h1>Multi-Step Form Example</h1>
+            <Link to="/form/PersonalDetails">
+              <button>Start Form</button>
+            </Link>
+          </div>
+        } />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
