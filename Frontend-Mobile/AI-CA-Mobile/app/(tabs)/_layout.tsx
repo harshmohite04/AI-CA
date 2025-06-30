@@ -1,10 +1,9 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-import PersonalDetailsScreen from './PersonalDetailsScreen';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import '../../global.css'
+import { Tabs } from 'expo-router';
+import React from 'react';
+import '../../global.css';
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -16,7 +15,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           display: 'none',
-          },
+        },
       }}>
       <Tabs.Screen
         name="HomeScreen"
