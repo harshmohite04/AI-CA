@@ -8,10 +8,19 @@ import TDSfiling from './Pages/TDSfiling';
 import PayrollProcessing from './Pages/PayrollProcessing';
 import BusinessDetails from './Pages/BusinessDetails';
 import DocumentUploads from './Pages/DocumentUploads';
+import MainPage from './Pages/MainPage';
+import LoginPage from './Pages/LoginPage';
+import SignupPage from './Pages/SignupPage';
+import OTPVerification from './Pages/OTPVerification';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes >
+    <BrowserRouter >
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/otp-verification" element={<OTPVerification />} />
         <Route path="/form/PersonalDetails" element={<PersonalDetails />} />
         <Route path="/form/BankDetails" element={<BankDetails />} />
         <Route path="/form/ITRFilling" element={<ITRFilling />} />
@@ -20,15 +29,7 @@ function App() {
         <Route path="/form/PayrollProcessing" element={<PayrollProcessing />} />
         <Route path="/form/BusinessDetails" element={<BusinessDetails />} />
         <Route path="/form/DocumentUploads" element={<DocumentUploads />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="*" element={
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <h1>Multi-Step Form Example</h1>
-            <Link to="/form/PersonalDetails">
-              <button>Start Form</button>
-            </Link>
-          </div>
-        } />
+        <Route path="/home" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );
